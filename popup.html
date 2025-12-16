@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translation Settings</title>
+    <style>
+        body {
+            width: 300px;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            background: #fef4e8;
+        }
+
+        .header {
+            background: #ffb703;
+            border-bottom: 3px solid #000;
+            padding: 12px 16px;
+            text-align: center;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 14px;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 900;
+        }
+
+        .content {
+            padding: 16px;
+        }
+
+        .setting-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 3px solid #000;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            background: white;
+            cursor: pointer;
+            box-shadow: 3px 3px 0 #000;
+        }
+
+        select:focus {
+            outline: none;
+            box-shadow: 3px 3px 0 #000, 0 0 0 3px #ffb703;
+        }
+
+        .shortcut {
+            margin-top: 16px;
+            padding: 12px;
+            background: #fff8e8;
+            border: 3px solid #000;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 3px 3px 0 #000;
+        }
+
+        .shortcut strong {
+            display: block;
+            margin-bottom: 6px;
+            color: #000;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .shortcut kbd {
+            background: #ffb703;
+            padding: 4px 8px;
+            border: 2px solid #000;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .saved {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #10b981;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 2px solid #059669;
+            font-size: 12px;
+            font-weight: 700;
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .saved.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h2>🌐 TRANSLATION SETTINGS</h2>
+    </div>
+
+    <div class="content">
+        <div class="setting-group">
+            <label for="source-lang">Translate from:</label>
+            <select id="source-lang">
+                <option value="auto">🌐 Auto-detect</option>
+                <option value="en">🇬🇧 English</option>
+                <option value="de">🇩🇪 German</option>
+                <option value="es">🇪🇸 Spanish</option>
+                <option value="fr">🇫🇷 French</option>
+                <option value="it">🇮🇹 Italian</option>
+                <option value="pt">🇵🇹 Portuguese</option>
+                <option value="ru">🇷🇺 Russian</option>
+                <option value="ja">🇯🇵 Japanese</option>
+                <option value="zh">🇨🇳 Chinese</option>
+                <option value="ar">🇸🇦 Arabic</option>
+                <option value="hi">🇮🇳 Hindi</option>
+            </select>
+        </div>
+
+        <div class="setting-group">
+            <label for="target-lang">Translate to:</label>
+            <select id="target-lang">
+                <option value="en">🇬🇧 English</option>
+                <option value="de">🇩🇪 German</option>
+                <option value="es">🇪🇸 Spanish</option>
+                <option value="fr">🇫🇷 French</option>
+                <option value="it">🇮🇹 Italian</option>
+                <option value="pt">🇵🇹 Portuguese</option>
+                <option value="ru">🇷🇺 Russian</option>
+                <option value="ja">🇯🇵 Japanese</option>
+                <option value="zh">🇨🇳 Chinese</option>
+                <option value="ar">🇸🇦 Arabic</option>
+                <option value="hi">🇮🇳 Hindi</option>
+            </select>
+        </div>
+
+        <div class="shortcut">
+            <strong>Keyboard Shortcut</strong>
+            Press <kbd>Alt+T</kbd> to toggle
+        </div>
+    </div>
+
+    <div class="saved" id="saved-indicator">✓ Saved</div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
