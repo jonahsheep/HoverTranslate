@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Hover Translate",
     "version": "1.0",
-    "description": "Press Alt+T, hover or select German text to translate with a fun pop-up UI.",
+    "description": "Press Alt+T, hover or select text to translate with a fun pop-up UI.",
     "permissions": [
         "activeTab",
         "scripting",
@@ -16,7 +16,19 @@
     },
     "action": {
         "default_popup": "popup.html",
-        "default_title": "Translation Settings"
+        "default_title": "Translation Settings",
+        "default_icon": {
+            "16": "icon.png",
+            "32": "icon.png",
+            "48": "icon.png",
+            "128": "icon.png"
+        }
+    },
+    "icons": {
+        "16": "icon.png",
+        "32": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
     },
     "content_scripts": [
         {
