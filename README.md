@@ -4,12 +4,12 @@ A simple Chrome extension that translates text on hover or selection with a retr
 
 ## Features
 
-- 🌐 **Auto Language Detection** - Supports 12 languages with auto-detect
-- 🎨 **Retro Design** - Clean, playful UI with yellow accents
-- ⚡ **Quick Toggle** - Press `Alt+T` to enable/disable
-- 🎯 **Hover Translation** - Hover over single words to translate
-- 📝 **Selection Translation** - Select any text to translate
-- 💾 **Persistent Settings** - Your language preferences are saved
+-  **Auto Language Detection** - Supports 12 languages with auto-detect
+-  **Retro Design** - Clean, playful UI with yellow accents
+-  **Quick Toggle** - Press `Alt+T` to enable/disable
+-  **Hover Translation** - Hover over single words to translate
+-  **Selection Translation** - Select any text to translate
+-  **Persistent Settings** - Your language preferences are saved
 
 ## Installation
 
