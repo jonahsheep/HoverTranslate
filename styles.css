@@ -1,5 +1,5 @@
 .popup-translate-ui {
-  position: fixed;
+  position: absolute;
   width: 180px;
   background: #fef4e8;
   border: 3px solid #000;

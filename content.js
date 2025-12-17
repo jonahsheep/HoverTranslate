@@ -10,6 +10,18 @@ chrome.storage.sync.get(['sourceLang', 'targetLang'], (result) => {
     if (result.targetLang) targetLang = result.targetLang;
 });
 
+// listen for storage changes to sync language preferences in real-time
+chrome.storage.onChanged.addListener((changes, areaName) => {
+    if (areaName === 'sync') {
+        if (changes.sourceLang) {
+            sourceLang = changes.sourceLang.newValue;
+        }
+        if (changes.targetLang) {
+            targetLang = changes.targetLang.newValue;
+        }
+    }
+});
+
 // listen for toggle messages
 chrome.runtime.onMessage.addListener((msg) => {
     if (msg.type === "TOGGLE_TRANSLATE") {
@@ -33,13 +45,18 @@ async function translateText(text, source = sourceLang, target = targetLang) {
         const data = await res.json();
 
         if (data.responseStatus === 200 && data.responseData) {
-            return data.responseData.translatedText;
+            const translated = data.responseData.translatedText;
+            // If translation is same as original, might be same language or detection failed
+            if (translated.toLowerCase().trim() === text.toLowerCase().trim()) {
+                return translated + " (no translation available)";
+            }
+            return translated;
         } else {
-            throw new Error('Translation unavailable');
+            throw new Error(`Translation unavailable: ${data.responseDetails || 'Unknown error'}`);
         }
     } catch (error) {
         console.error("Translation error:", error);
-        return "Translation failed";
+        return `Translation failed: ${error.message}`;
     }
 }
 
@@ -59,9 +76,19 @@ function showTooltip(x, y, original, translated) {
     </div>
   `;
 
-    // position it near the selection
-    const safeX = Math.min(x, window.innerWidth - 200);
-    const safeY = Math.min(y + 20, window.innerHeight - 100);
+    // position it near the selection - use absolute positioning
+    // add scroll offset since we're using absolute positioning now
+    const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+    // keep popup within viewport bounds
+    const safeX = Math.max(10, Math.min(x, window.innerWidth + scrollX - 210));
+    // position above the cursor/selection by default
+    let safeY = y - 80;
+    // if too close to top, position below instead
+    if (y - scrollY < 100) {
+        safeY = y + 20;
+    }
 
     tooltip.style.top = `${safeY}px`;
     tooltip.style.left = `${safeX}px`;
@@ -152,10 +179,26 @@ document.addEventListener("mouseup", async (e) => {
     // ignore clicks on popup
     if (e.target.closest('.popup-translate-ui')) return;
 
-    const selected = window.getSelection().toString().trim();
+    const selection = window.getSelection();
+    const selected = selection.toString().trim();
     if (!selected) return;
     if (selected.length > 500) return;
 
+    // get precise position of selected text
+    let x = e.pageX;
+    let y = e.pageY;
+
+    try {
+        const range = selection.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+        // use the center of the selection for better positioning
+        x = rect.left + (rect.width / 2) + (window.pageXOffset || document.documentElement.scrollLeft);
+        y = rect.top + (window.pageYOffset || document.documentElement.scrollTop);
+    } catch (err) {
+        // fallback to mouse position if getting range fails
+        console.log("Using fallback positioning");
+    }
+
     const translated = await translateText(selected, sourceLang, targetLang);
-    showTooltip(e.pageX, e.pageY, selected, translated);
+    showTooltip(x, y, selected, translated);
 });
