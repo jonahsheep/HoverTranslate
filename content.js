@@ -24,11 +24,16 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
 
 // listen for toggle messages
 chrome.runtime.onMessage.addListener((msg) => {
+    console.log("[Content] Message received:", msg);
+
     if (msg.type === "TOGGLE_TRANSLATE") {
         translateEnabled = msg.enabled;
+        console.log("[Content] Translation mode set to:", translateEnabled);
+
         if (!translateEnabled) removeTooltip();
 
         showNotification(translateEnabled ? "Translation Mode ON" : "Translation Mode OFF", translateEnabled);
+        console.log("[Content] Notification should be displayed");
     }
 });
 
